@@ -1,13 +1,21 @@
 #!/bin/bash
 
-echo "🚀 Entorno Vibepollo detectado."
-echo "📦 Usando aplicaciones pre-instaladas del backup..."
+# 1. SOLUCIÓN DE PANTALLA
+# Forzamos al sistema a que use todo el espacio disponible del monitor virtual
+echo "🖥️ Ajustando resolución y expandiendo escritorio..."
+DISPLAY=:1 xrandr --output DVI-D-0 --auto
 
-# Dar permisos de ejecución a los binarios en tu carpeta por si acaso
-chmod +x /content/Vibepollo/* 2>/dev/null
+# 2. CONFIGURACIÓN VIBEPOLLO
+# Aseguramos que los scripts del repo tengan permisos de ejecución
+echo "🚀 Configurando entorno Vibepollo..."
+chmod +x /content/Vibepollo/*.py 2>/dev/null
+chmod +x /content/Vibepollo/*.sh 2>/dev/null
 
-# Aquí podés poner comandos que quieras que se ejecuten al inicio 
-# sin instalar nada, como crear una carpeta de partidas:
-mkdir -p /home/user/Partidas_PES
+# 3. PERSISTENCIA DE RUTA
+# Agregamos Vibepollo al PATH del usuario para que los comandos funcionen siempre
+if ! grep -q "Vibepollo" /home/user/.bashrc; then
+    echo 'export PATH="$PATH:/content/Vibepollo"' >> /home/user/.bashrc
+fi
 
-echo "✅ Configuración de inicio finalizada."
+echo "✅ Configuración finalizada. Pantalla corregida."
+
